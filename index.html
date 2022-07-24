@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'"> -->
+    <title>Hello World!</title>
+  </head>
+  <body>
+
+    <!-- 状态检测 -->
+    <h1>Connection status: <strong id='status'></strong></h1>
+    <div id="output"></div>
+
+    <!-- 截屏 -->
+    <button id="screen-shot">screen-shot</button>
+    <textarea id="screenshot-path">a</textarea>
+
+    <!-- 加入新的css模块 -->
+    <button class="btn btn-info"> 测试</button>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.20.0/dist/full.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script src="./src/render/js/renderer.js"></script>
+
+  </body>
+</html>
