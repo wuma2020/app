@@ -1,3 +1,6 @@
+
+console.log('des.js loaded!')
+
 const {screen,desktopCapturer, shell,contextBridge,ipcMain, ipcRenderer} = require('electron')
 const path = require('path')
 const fs = require('fs')
