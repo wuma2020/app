@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-theme="dark">
+<html data-theme="garden">
 
 <head>
   <meta charset="UTF-8">
@@ -15,83 +15,104 @@
 
 <body>
 
-  <div id="head">
-    <!-- 头部html -->
+  <!-- 
+.drawer // The root container
+  ├── .drawer-toggle // A hidden checkbox to toggle the visibility of the sidebar
+  ├── .drawer-content // All your page content goes here
+  │    ├── // navbar
+  │    ├── // content
+  │    └── // footer
+  └── .drawer-side // Sidebar wrapper
+       ├── .drawer-overlay // A dark overlay that covers the whole page when the drawer is open
+       └── // Sidebar content (menu or anything)
 
-    <div class="navbar bg-base-100">
-      <div class="navbar-start">
-        <div class="dropdown">
-          <label tabindex="0" class="btn btn-ghost btn-circle">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
-            </svg>
-          </label>
-          <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
-            <li><a>Homepage</a></li>
-            <li><a>Portfolio</a></li>
-            <li><a>About</a></li>
-          </ul>
+   -->
+  <div class="drawer">
+    <input id="my-drawer" type="checkbox" class="drawer-toggle" />
+    <div class="drawer-content flex flex-col items-center">
+      <!-- // navbar -->
+      <!-- <label for="my-drawer" class="btn btn-primary drawer-button lg:hidden">Open drawer</label> -->
+      <!-- 这里添加一个导航栏，然后添加一个触发左侧的标签打开的开关就好了 -->
+      <div class="navbar bg-base-100">
+        <div class="navbar-start">
+          <div class="dropdown">
+            <!-- 控制左侧导航栏开关 -->
+            <label for="my-drawer" tabindex="0" class="btn btn-ghost btn-circle">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
+              </svg>
+            </label>
+          </div>
         </div>
-      </div>
-      <div class="navbar-center">
-        <a class="btn btn-ghost normal-case text-xl">daisyUI</a>
-      </div>
-      <div class="navbar-end">
-        <button class="btn btn-ghost btn-circle">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
-        </button>
-        <button class="btn btn-ghost btn-circle">
-          <div class="indicator">
+        <div class="navbar-center">
+          <a class="btn btn-ghost normal-case text-xl">伍马</a>
+        </div>
+        <div class="navbar-end">
+          <div class="form-control">
+            <input type="text" placeholder="Search" class="input input-bordered">
+          </div>
+          <button class="btn btn-ghost btn-circle">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
               stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
-            <span class="badge badge-xs badge-primary indicator-item"></span>
-          </div>
-        </button>
-      </div>
-    </div>
-
-  </div>
-  <div id="body">
-
-    <!-- 身体html -->
-    <!-- 添加图片 -->
-    <div>
-      <div class="h-96 carousel carousel-vertical rounded-box">
-        <div class="carousel-item h-full">
-          <img src="https://placeimg.com/256/400/arch" />
+          </button>
+          <button class="btn btn-ghost btn-circle">
+            <div class="avatar online">
+              <div class="rounded-full">
+                <img src="https://placeimg.com/192/192/people" />
+              </div>
+            </div>
+          </button>
         </div>
       </div>
+
+      <!-- Page content here  // content-->
+      <div id="page_content">
+        <div class="stats bg-primary text-primary-content">
+  
+          <div class="stat">
+            <div class="stat-title">Account balance</div>
+            <div class="stat-value">$89,400</div>
+            <div class="stat-actions">
+              <button class="btn btn-sm btn-success">Add funds</button>
+            </div>
+          </div>
+          
+          <div class="stat">
+            <div class="stat-title">Current balance</div>
+            <div class="stat-value">$89,400</div>
+            <div class="stat-actions">
+              <button class="btn btn-sm">Withdrawal</button> 
+              <button class="btn btn-sm">deposit</button>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+
+      <!-- // footer -->
+
+
+
+
     </div>
+    <div class="drawer-side">
+      <label for="my-drawer" class="drawer-overlay">label cece </label>
+      <ul id="navbarul" class="menu p-4 overflow-y-auto w-80 bg-base-100 text-base-content">
+        <!-- Sidebar content here -->
+        <li><a>基础</a></li>
+        <li><a>spring知识点</a></li>
+        <li><a>inux知识点</a></li>
 
-    <div>
-
-      <!-- 状态检测 -->
-      <h1>Connection status: <strong id='status'></strong></h1>
-      <div id="output"></div>
-
-      <!-- 截屏 -->
-      <button id="screen-shot">screen-shot</button>
-      <textarea id="screenshot-path">a</textarea>
-
-      <!-- 加入新的css模块 -->
-      <button class="btn btn-info"> 测试</button>
-
-
+      </ul>
     </div>
-
   </div>
-  <div id="footer"></div>
-
 
   <!-- 引用资源 -->
-  <link href="https://cdn.jsdelivr.net/npm/daisyui@2.20.0/dist/full.css" rel="stylesheet" type="text/css" />
+  <link href="./node_modules/_daisyui@2.20.0@daisyui/dist/full.css" rel="stylesheet" type="text/css" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 

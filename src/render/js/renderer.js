@@ -2,35 +2,14 @@
 //===================初始化html===================
 var initHtml = () => {
 
-  const updateOnlineStatus = () => {
-    const NOTIFICATION_TITLE = '网络变化通知'
-    const NOTIFICATION_BODY = 'Notification from the Renderer process. Click to log to console.'
-    const CLICK_MESSAGE = 'Notification clicked!'
+  console.log('测试')
+  // $("#navbarul").click
 
-    $('#status').html(navigator.onLine ? 'online' : 'offline')
+  $("ul li").click(function (ee) {
+    // todo 给每一个导航栏添加监听，展示响应的数据
+    $("#page_content").html("aaaaaaaa")
 
-    new Notification(NOTIFICATION_TITLE, { body: navigator.onLine ? '上线' : '下线' })
-      .onclick = () => $("#output").text(CLICK_MESSAGE)
-
-  }
-
-  window.addEventListener('online', updateOnlineStatus)
-  window.addEventListener('offline', updateOnlineStatus)
-
-  updateOnlineStatus()
-
-
-  //===================截图===================
-  var screenshot = document.getElementById('screen-shot')
-  const screenshotMsg = document.getElementById('screenshot-path')
-
-  // screenshot.onclick(async () => {
-  //   var filePath = await window.electrona.mykk()
-  // }
-  // )
-
-  $("#screen-shot").click(async () => {
-    var filePath = await window.electrona.mykk()
+    
   })
 
 
