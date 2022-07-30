@@ -1,28 +1,34 @@
 <!DOCTYPE html>
 <html data-theme="dark">
-  <head>
-    <meta charset="UTF-8">
 
-    <link rel="import" href="./src/static/head.html" />
-    <link rel="import" href="./src/static/body.html" />
-    <link rel="import" href="./src/static/footer.html" />
-    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'"> -->
-    <title>Hello World!</title>
-  </head>
-  <body>
+<head>
+  <meta charset="UTF-8">
 
-    <div id="head"></div>
-    <div id="body"></div>
-    <div id="footer"></div>
+  <link rel="import" href="./src/static/head.html" />
+  
+  <link rel="import" href="./src/static/body.html" />
+  <link rel="import" href="./src/static/footer.html" />
+  <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+  <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'"> -->
+  <title>Hello World!</title>
+</head>
+
+<body>
+
+  <div id="head"></div>
+  <div id="body"></div>
+  <div id="footer"></div>
 
 
-    <!-- 引用资源 -->
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.20.0/dist/full.css" rel="stylesheet" type="text/css" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-    <!-- <script>require('./src/render/js/renderer')</script> -->
-    <script src="./src/render/js/renderer.js"></script>
+  <!-- 引用资源 -->
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@2.20.0/dist/full.css" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+  <!-- <script>require('./src/render/js/renderer')</script> -->
 
-  </body>
+  <script src="./src/render/js/renderer.js"></script>
+
+
+</body>
+
 </html>
