@@ -4,13 +4,25 @@ var initHtml = () => {
 
   console.log('测试')
   // $("#navbarul").click
+  $("#page_content").load("./src/static/page_content_main.html");
 
-  $("ul li").click(function (ee) {
+
+  $("#navbarul li").click(function (ee) {
     // todo 给每一个导航栏添加监听，展示响应的数据
-    $("#page_content").html("aaaaaaaa")
-
+    console.log(ee.toElement)
+    if(ee.toElement.name == "main"){
+      $("#page_content").load("./src/static/page_content_main.html");
+    }else{
+      $("#page_content").html("aaaaaaaa")
+    }
     
+
   })
+
+  // 切换主题
+  $("#change_theme li").click(function (a) { 
+    $("html").attr("data-theme", a.toElement.text);
+  });
 
 
 }

@@ -1,8 +1,8 @@
 // main.js
 // Modules to control application life and create native browser window
-const { app, BrowserWindow ,ipcMain} = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
 const { Menu } = require('electron/main')
-const fs  = require('fs')
+const fs = require('fs')
 const path = require('path')
 // const elema = require('./elema')
 
@@ -19,13 +19,13 @@ const createWindow = () => {
   // require('./preload')
   // 加载 index.html
   mainWindow.loadFile('index.html')
-  if(process.platform === 'darwin'){
+  if (process.platform === 'darwin') {
     app.dock.setIcon(path.join(__dirname, './src/main/image/makalong.png'))
     app.dock.name = "wuma"
 
   }
   app.name = "wuma"
-
+  app.title = "wuma"
   // 打开开发工具
   mainWindow.webContents.openDevTools()
 }
@@ -41,8 +41,6 @@ app.whenReady().then(() => {
   //初始化模块
   initMainJS()
 
-
-
 })
 
 
@@ -52,7 +50,6 @@ app.whenReady().then(() => {
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit()
 })
-
 
 
 const initMainJS = () => {

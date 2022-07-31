@@ -10,7 +10,7 @@
   <link rel="import" href="./src/static/footer.html" />
   <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
   <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'"> -->
-  <title>Hello World!</title>
+  <title>伍马·APP</title>
 </head>
 
 <body>
@@ -44,6 +44,21 @@
               </svg>
             </label>
           </div>
+          <!-- 切换主题 -->
+          <div  class="dropdown">
+            <label tabindex="0" class="btn m-1">主题</label>
+            <ul id="change_theme" tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+              <li><a>light</a></li>
+              <li><a>dark</a></li>
+              <li><a>retro</a></li>
+              <li><a>valentine</a></li>
+              <li><a>halloween</a></li>
+              <li><a>aqua</a></li>
+              <li><a>night</a></li>
+              <li><a>garden</a></li>
+            </ul>
+          </div>
+
         </div>
         <div class="navbar-center">
           <a class="btn btn-ghost normal-case text-xl">伍马</a>
@@ -71,41 +86,20 @@
 
       <!-- Page content here  // content-->
       <div id="page_content">
-        <div class="stats bg-primary text-primary-content">
-  
-          <div class="stat">
-            <div class="stat-title">Account balance</div>
-            <div class="stat-value">$89,400</div>
-            <div class="stat-actions">
-              <button class="btn btn-sm btn-success">Add funds</button>
-            </div>
-          </div>
-          
-          <div class="stat">
-            <div class="stat-title">Current balance</div>
-            <div class="stat-value">$89,400</div>
-            <div class="stat-actions">
-              <button class="btn btn-sm">Withdrawal</button> 
-              <button class="btn btn-sm">deposit</button>
-            </div>
-          </div>
-          
-        </div>
+
       </div>
 
       <!-- // footer -->
-
-
-
 
     </div>
     <div class="drawer-side">
       <label for="my-drawer" class="drawer-overlay">label cece </label>
       <ul id="navbarul" class="menu p-4 overflow-y-auto w-80 bg-base-100 text-base-content">
         <!-- Sidebar content here -->
-        <li><a>基础</a></li>
+        <li><a name="main">主页</a></li>
         <li><a>spring知识点</a></li>
         <li><a>inux知识点</a></li>
+        <li><a>基础</a></li>
 
       </ul>
     </div>
