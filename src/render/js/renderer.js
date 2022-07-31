@@ -2,7 +2,6 @@
 //===================初始化html===================
 var initHtml = () => {
 
-  console.log('测试')
   // $("#navbarul").click
   $("#page_content").load("./src/static/page_content_main.html");
 
@@ -12,11 +11,11 @@ var initHtml = () => {
     console.log(ee.toElement)
     if(ee.toElement.name == "main"){
       $("#page_content").load("./src/static/page_content_main.html");
+    }else if(ee.toElement.name == "short-cut"){
+      $("#page_content").load("./src/static/desktop_image.html");
     }else{
       $("#page_content").html("aaaaaaaa")
     }
-    
-
   })
 
   // 切换主题

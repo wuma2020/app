@@ -1,14 +1,5 @@
 //渲染进程
 
-const os =  require('os')
-
-const cpuInfos =  os.cpus()
-
-
-console.log(cpuInfos[0].times.user)
-console.log(cpuInfos)
-
-
 //=====================
 
 // This file is required by the index.html file and will
@@ -60,7 +51,6 @@ contextBridge.exposeInMainWorld('electrona',
 {
   mykk: () => {
     var aa = ipcRenderer.invoke('shortchat',"aa")
-    console.log("pre test " + aa)
     return aa;
   }
 })
