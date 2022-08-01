@@ -61,15 +61,15 @@ $('#stopButton')
 $('#videoSelect').click(getVideonSources)
 
 
-const { remote }= require('electron')
+const { remote } = require('electron')
 const Menu = remote.Menu
 // 获取可用的视频源
-async function getVideonSources(){
+async function getVideonSources() {
 
-  const sources = await desktopCapturer.getSources({types:['window','screen']});
+  const sources = await desktopCapturer.getSources({ types: ['window', 'screen'] });
 
   var videoOptionMenu = Menu.buildFromTemplate(
-    sources.map(source =>{
+    sources.map(source => {
       return {
         label: source.name,
         click: () => selectSource(source)
@@ -85,14 +85,14 @@ let mediaRecorder;
 const recordedChunks = [];
 
 //显示视频原
-async function selectSource(source){
-  
+async function selectSource(source) {
+
   //设置选中的视频原
   $('#videoSelect').text(source.name)
 
   const mediaOptions = {
-    audio : false,
-    video : {
+    audio: false,
+    video: {
       mandatory: {
         chromeMediaSource: 'desktop',
         chromeMediaSourceId: source.id
@@ -103,18 +103,40 @@ async function selectSource(source){
   //获取指定视频原的视频流
   const stream = await navigator.mediaDevices.getUserMedia(mediaOptions);
 
+
+  // =================================使用navigator.mediaDevices.getDisplayMedia来进行获取数据
+  // var displayMediaOptions = {
+  //   video: {
+  //     cursor: "always"
+  //   },
+  //   audio: false
+  // }
+
+  // try {
+  //   $('#video')[0].srcObject = await navigator.mediaDevices.getDisplayMedia(displayMediaOptions);
+
+  //   var videoTracks = $('#video')[0].srcObject.getVideoTracks()[0];
+
+  //   console.info(videoTracks)
+  // } catch (error) {
+  //   console.info(error)
+  // }
+  // =================================使用navigator.mediaDevices.getDisplayMedia来进行获取数据
+
+
+
   //展示视频原
   $('#video')[0].srcObject = stream;
   $('#video')[0].play();
 
 
   //创建一个视频记录流
-    // Create the Media Recorder
-    // const options = { mimeType: 'video/webm; codecs=vp9' };
-    // mediaRecorder = new MediaRecorder(stream, options);
-  
-    // // Register Event Handlers
-    // mediaRecorder.ondataavailable = handleDataAvailable;
-    // mediaRecorder.onstop = handleStop;
+  // Create the Media Recorder
+  // const options = { mimeType: 'video/webm; codecs=vp9' };
+  // mediaRecorder = new MediaRecorder(stream, options);
+
+  // // Register Event Handlers
+  // mediaRecorder.ondataavailable = handleDataAvailable;
+  // mediaRecorder.onstop = handleStop;
 
 }
