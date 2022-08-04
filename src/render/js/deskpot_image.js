@@ -4,7 +4,6 @@
 const { screen } = require('electron').remote
 var desktopCapturer = require('electron').desktopCapturer
 
-const fs = require('fs')
 const os = require('os')
 const path = require('path')
 
@@ -56,12 +55,12 @@ function determineScreenShotSize() {
 }
 
 $('#video')
-$('#startButton')
-$('#stopButton')
+//开始录屏
 $('#videoSelect').click(getVideonSources)
 
 
-const { remote } = require('electron')
+const { remote, dialog } = require('electron')
+const { error } = require('console')
 const Menu = remote.Menu
 // 获取可用的视频源
 async function getVideonSources() {
@@ -129,14 +128,71 @@ async function selectSource(source) {
   $('#video')[0].srcObject = stream;
   $('#video')[0].play();
 
+  var options = {
+    // audioBitsPerSecond?: number;
+    // bitsPerSecond?: number;
+    mimeType: 'video/webm'
+    // videoBitsPerSecond?: number;
+  };
 
   //创建一个视频记录流
-  // Create the Media Recorder
-  // const options = { mimeType: 'video/webm; codecs=vp9' };
-  // mediaRecorder = new MediaRecorder(stream, options);
+  mediaRecorder = new MediaRecorder(stream, options);
+  mediaRecorder.ondataavailable = handleDataAvaliable;
+  mediaRecorder.onstop = handleStop;
 
-  // // Register Event Handlers
-  // mediaRecorder.ondataavailable = handleDataAvailable;
-  // mediaRecorder.onstop = handleStop;
+  // 处理开始和结束
+  function handleDataAvaliable(event) {
+    recordedChunks.push(event.data);
+  }
+
+  //获取dialog
+  const dialog = require('electron').remote.dialog;
+  const fs = require('fs');
+
+  //处理录屏结束按钮
+  function handleStop(event) {
+    console.log('handleStop');
+    // 创建blob对象，进行存储
+    const blob = new Blob(recordedChunks, { type: 'video/webm' });
+
+    //设置路径
+    var filePath = dialog.showSaveDialogSync({
+      buttonLabel: '保存文件',
+      defaultPath: `录屏-${Date.now()}.webm`,
+    });
+
+    console.log(filePath);
+
+    var fileReader = new FileReader();
+    fileReader.onload = function () {
+      console.log(this.result);
+      fs.writeFile(filePath, Buffer.from(this.result),(err) => {
+        console.log(err); 
+      });
+    };
+    fileReader.readAsArrayBuffer(blob);
+
+    // var blobBuffer = blob.arrayBuffer();
+    // var buffer = Buffer.from(blobBuffer);
+    // writeFile.writeFileSync(filePath, buffer);
+    // fs.writeFileSync(filePath,  buffer,{ flag: 'w+' },err => {
+    //   console.log(err );
+    // });
+
+  }
 
 }
+
+//开始记录
+$('#startButton').click(() => {
+  mediaRecorder.start();
+  console.log('start 记录');
+  $('#tip_info').text('开始记录中...');
+})
+
+
+$('#stopButton').click(() => {
+  mediaRecorder.stop();
+  $('#tip_info').text('未开始记录...');
+})
+
