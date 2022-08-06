@@ -8,13 +8,12 @@ var initHtml = () => {
 
   $("#navbarul li").click(function (ee) {
     // todo 给每一个导航栏添加监听，展示响应的数据
-    console.log(ee.toElement)
     if(ee.toElement.name == "main"){
       $("#page_content").load("./src/static/page_content_main.html");
     }else if(ee.toElement.name == "short-cut"){
       $("#page_content").load("./src/static/desktop_image.html");
     }else{
-      $("#page_content").html("aaaaaaaa")
+      $("#page_content").html("没有找到页面")
     }
   })
 

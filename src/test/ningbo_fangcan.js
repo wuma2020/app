@@ -24,6 +24,17 @@ var connection = mysql.createConnection({
 
 connection.connect();
 
+/**
+       // 0 | 2022/8/2
+        // app/src/test/ningbo_fangcan.js:89
+        // 1 | ZJ22330212MM0043699
+        // app/src/test/ningbo_fangcan.js:89
+        // 2 | 鄞州区
+        // app/src/test/ningbo_fangcan.js:89
+        // 3 | 五乡镇(明湖湾雅苑)
+        // app/src/test/ningbo_fangcan.js:89
+        // 4 | 宁波市缔晟房地产营销策划有限公司
+ */
 //解析抓取的数据
 const resolveHtmlIntoSqllite = ($) => {
 
@@ -33,18 +44,6 @@ const resolveHtmlIntoSqllite = ($) => {
     trList.each((index, elementtr) => {
 
         var tds = $(elementtr).children('td');
-
-
-        // 0 | 2022/8/2
-        // app/src/test/ningbo_fangcan.js:89
-        // 1 | ZJ22330212MM0043699
-        // app/src/test/ningbo_fangcan.js:89
-        // 2 | 鄞州区
-        // app/src/test/ningbo_fangcan.js:89
-        // 3 | 五乡镇(明湖湾雅苑)
-        // app/src/test/ningbo_fangcan.js:89
-        // 4 | 宁波市缔晟房地产营销策划有限公司
-
         var order_time = '';
         var order_sn = '';
         var district = '';
@@ -83,7 +82,7 @@ const resolveHtmlIntoSqllite = ($) => {
             ];
         }
 
-        console.log(querySql);
+        console.log(querySql,records);
         connection.query(querySql, [records], sqlCallback);
 
     });
@@ -94,16 +93,19 @@ const resolveHtmlIntoSqllite = ($) => {
 
 
 const sqlCallback = (error, results) => {
-    if (error) throw error;
 
-    console.log(JSON.stringify(results));
-    Object.keys(results).forEach(function (key) {
-        //遍历一行记录 key 为索引
-        // console.log(results[key]);
-    });
+    if (error){
+        console.log(error); 
+    }
+
+    // console.log(JSON.stringify(results));
+    // Object.keys(results).forEach(function (key) {
+    //     //遍历一行记录 key 为索引
+    //     // console.log(results[key]);
+    // });
 }
 
-const getPageAllNumber =  () =>{
+const getPageAllNumber = () => {
 
     var options = {
         hostname: 'esf.cnnbfdc.com',
@@ -114,8 +116,8 @@ const getPageAllNumber =  () =>{
 
     var req = https.request(options, (result) => {
 
-        var dataAll ;
-        result.on('data', (chunk) => {  
+        var dataAll;
+        result.on('data', (chunk) => {
             dataAll += chunk;
         });
 
@@ -126,13 +128,23 @@ const getPageAllNumber =  () =>{
             var startNumber = parseInt(indexofNumber) + 5;
             var allNumner = $(".PagedList-skipToLast a").attr("href");
             global.pageAll = parseInt(allNumner.substr(startNumber, 55));
-            doWorlk();
+            var intervalId = setInterval(() => {
+                doWorlk();
+            }, 3000);
+
+            setTimeout(() => {
+                if(global.pageNow > global.pageAll ){
+                    console.log("清除定时任务");
+                    clearInterval(intervalId); 
+                }
+            }, 1000 * 60 * 5);
+
         });
 
     });
-    
+
     req.end();
-    
+
 
 }
 
@@ -147,53 +159,40 @@ global.pageNow = 1;
 
 var doWorlk = () => {
 
-    while(true){
-        
-        if( global.pageNow + 1 == global.pageAll){
-            break;
-        }
 
-        var options = {
-            hostname: 'esf.cnnbfdc.com',
-            port: 443,
-            path: '/Contract?page=' + global.pageNow,
-            method: 'GET'
-        }
-    
-        var req = https.request(options, (result) => {
-            var dataAll = '';
-            result.on('data', data => {
-                dataAll = dataAll + data;
-            });
-    
-            result.on('end' ,() => {
-                var $ = cheerio.load(dataAll);
-                console.log($(".PagedList-skipToLast a").attr("href"));
-                var indexofNumber = $(".PagedList-skipToLast a").attr("href").indexOf("page");
-                var startNumber = parseInt(indexofNumber) + 5;
-                var allNumner = $(".PagedList-skipToLast a").attr("href");
-                global.pageAll = parseInt(allNumner.substr(startNumber, 55));
-                resolveHtmlIntoSqllite($);
-                global.pageNow = global.pageNow + 1;
-                console.log("完成一次请求");
-
-            })
-    
-        });
-        req.on('error', (err)=>{
-            console.log(err);
-        });
-    
-        req.end();
-
+    if (global.pageNow > global.pageAll) {
+        return;
     }
 
-    
-    // request.on('error', (err) => {
-    //     console.log(err)
-    // });
+    var options = {
+        hostname: 'esf.cnnbfdc.com',
+        port: 443,
+        path: '/Contract?page=' + global.pageNow,
+        method: 'GET'
+    }
 
-    // request.end();
+    var req = https.request(options, (result) => {
+        var dataAll = '';
+        result.on('data', data => {
+            dataAll = dataAll + data;
+        });
+
+        result.on('end', () => {
+            var $ = cheerio.load(dataAll);
+            var nnnn = $(".pagination .active").text().trim();
+            console.log(nnnn);
+            resolveHtmlIntoSqllite($);
+            console.log("完成第%s页请求",global.pageNow);
+            global.pageNow = global.pageNow + 1;
+        })
+
+    });
+    req.on('error', (err) => {
+        console.log(err);
+    });
+
+    req.end();
+
 
 };
 
@@ -209,11 +208,11 @@ var doWorlk = () => {
 
 // doWorlk();
 
- function main (){
+function main() {
 
     console.log(global.pageNow, global.pageAll)
     getPageAllNumber()
-    console.log(global.pageNow,global.pageAll)
+    console.log(global.pageNow, global.pageAll)
 };
 
 main();
