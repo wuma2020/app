@@ -3,6 +3,7 @@ const https = require('https');
 const cheerio = require('cheerio');
 const mysql = require('mysql');
 const util = require('util');
+const childProcess = require('child_process')
 
 // CREATE TABLE `second_hand_house_order_record` (
 //     `order_sn` varchar(50) NOT NULL COMMENT '合同编号',
@@ -95,33 +96,27 @@ const resolveHtmlIntoSqllite = ($) => {
 const sqlCallback = (error, results) => {
     if (error) throw error;
 
+    console.log(JSON.stringify(results));
     Object.keys(results).forEach(function (key) {
         //遍历一行记录 key 为索引
-        console.log(results[key]);
+        // console.log(results[key]);
     });
 }
 
+const getPageAllNumber =  () =>{
 
-var url_target = 'https://esf.cnnbfdc.com/Contract?kw=%E6%B9%96&page=3'
+    var options = {
+        hostname: 'esf.cnnbfdc.com',
+        port: 443,
+        path: '/Contract',
+        method: 'GET'
+    };
 
-var pageAll = 0;
+    var req = https.request(options, (result) => {
 
-var pageNow = 1;
-
-var options = {
-    hostname: 'esf.cnnbfdc.com',
-    port: 443,
-    path: '/Contract?page=' + pageNow,
-    method: 'GET'
-}
-
-var doWorlk = () => {
-
-    https.request(options, (result) => {
-
-        var dataAll = '';
-        result.on('data', data => {
-            dataAll = dataAll + data;
+        var dataAll ;
+        result.on('data', (chunk) => {  
+            dataAll += chunk;
         });
 
         result.on('end', () => {
@@ -130,14 +125,70 @@ var doWorlk = () => {
             var indexofNumber = $(".PagedList-skipToLast a").attr("href").indexOf("page");
             var startNumber = parseInt(indexofNumber) + 5;
             var allNumner = $(".PagedList-skipToLast a").attr("href");
-            pageAll = parseInt(allNumner.substr(startNumber, 55))
-            resolveHtmlIntoSqllite($);
-            pageNow = pageNow + 1;
+            global.pageAll = parseInt(allNumner.substr(startNumber, 55));
+            doWorlk();
         });
 
+    });
+    
+    req.end();
+    
 
-    }).end();
+}
 
+
+var url_target = 'https://esf.cnnbfdc.com/Contract?kw=%E6%B9%96&page=3'
+
+global.pageAll = 0;
+
+global.pageNow = 1;
+
+
+
+var doWorlk = () => {
+
+    while(true){
+        
+        if( global.pageNow + 1 == global.pageAll){
+            break;
+        }
+
+        var options = {
+            hostname: 'esf.cnnbfdc.com',
+            port: 443,
+            path: '/Contract?page=' + global.pageNow,
+            method: 'GET'
+        }
+    
+        var req = https.request(options, (result) => {
+            var dataAll = '';
+            result.on('data', data => {
+                dataAll = dataAll + data;
+            });
+    
+            result.on('end' ,() => {
+                var $ = cheerio.load(dataAll);
+                console.log($(".PagedList-skipToLast a").attr("href"));
+                var indexofNumber = $(".PagedList-skipToLast a").attr("href").indexOf("page");
+                var startNumber = parseInt(indexofNumber) + 5;
+                var allNumner = $(".PagedList-skipToLast a").attr("href");
+                global.pageAll = parseInt(allNumner.substr(startNumber, 55));
+                resolveHtmlIntoSqllite($);
+                global.pageNow = global.pageNow + 1;
+                console.log("完成一次请求");
+
+            })
+    
+        });
+        req.on('error', (err)=>{
+            console.log(err);
+        });
+    
+        req.end();
+
+    }
+
+    
     // request.on('error', (err) => {
     //     console.log(err)
     // });
@@ -146,20 +197,26 @@ var doWorlk = () => {
 
 };
 
-while (true) {
+// while (true) {
 
-    if (pageAll != 0 && pageNow >= pageAll) {
-        break;
-    }
-    doWorlk();
+//     if (pageAll != 0 && pageNow >= pageAll) {
+//         break;
+//     }
+//     doWorlk();
 
-}
+// }
 
 
 // doWorlk();
 
+ function main (){
 
+    console.log(global.pageNow, global.pageAll)
+    getPageAllNumber()
+    console.log(global.pageNow,global.pageAll)
+};
 
+main();
 // connection.end();
 
 
