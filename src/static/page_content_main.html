@@ -1,35 +1,50 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/charts.css/dist/charts.min.css">
 
-<div >
+<div class="m-8">
 
   <!-- todo 去做宁波房产数据统计分析的公共页面 -->
-  <h1>todo 去做宁波房产数据统计分析的公共页面</h1>
+  <div class="alert alert-info shadow-lg alert-sm m-8">
+    <div>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+        class="stroke-current flex-shrink-0 w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      </svg>
+      <span>按照小区维度排序，小区维度搜索</span>
+    </div>
+  </div>
 
-  <div id="table_1" >
+  <div id="button-all">
+    <button class="btn btn-active btn-sm">全区</button>
+    <button class="btn btn-active btn-primary btn-sm">北仑区</button>
+    <button class="btn btn-active btn-secondary btn-sm">镇海区</button>
+    <button class="btn btn-active btn-accent btn-sm">鄞州区</button>
+    <button class="btn btn-active btn-ghost btn-sm">奉化区</button>
 
-    <table class="charts-css column multiple show-labels data-spacing-10 datasets-spacing-1"
-     style="margin-top: 100px;">
+    <button class="btn btn-outline btn-primary btn-sm">近7天</button>
+    <button class="btn btn-outline btn-secondary btn-sm">近30天</button>
+    <button class="btn btn-outline btn-accent btn-sm">所有</button>
+
+    <input id="search-input" type="text" placeholder="Type here" class="btn-sm input input-bordered input-primary w-full max-w-xs" />
+    <button class="btn btn-sm" >搜索</button>
+  </div>
+
+  <div id="table_1" class="my-32">
+
+    <table class="charts-css column multiple show-labels data-spacing-10 datasets-spacing-1">
       <caption> Front End Developer Salary </caption>
       <tbody>
-        <tr>
-          <th scope="row"> Asia </th>
+        <tr id="table_tr">
+          <th id="table_name" scope="row">全部</th>
           <!-- 这里最大是5 /1 看起来比较合适 -->
-          <td style="--size:calc( 500 / 100 );"><span class="data"> 10套 </span></td>
-          <td style="--size:calc( 30 / 100 );"><span class="data"> $30K </span></td>
-          <td style="--size:calc( 40 / 100 );"><span class="data"> $40K </span></td>
-          <td style="--size:calc( 50 / 100 );"><span class="data"> $50K </span></td>
-          <td style="--size:calc( 75 / 100 );"><span class="data"> $75K </span></td>
+          <!-- <td style="--size:calc( 500 / 100 );"><span class="data"> 10套 </span></td> -->
         </tr>
 
       </tbody>
     </table>
 
-    <ul class="charts-css legend legend-inline legend-square">
-      <li>龙湖滟澜小区</li>
-      <li>媒体蝴蝶海</li>
-      <li> 牛逼 </li>
-      <li> 啊啊啊 </li>
-      <li>小红小区 </li>
+    <ul id="explain_ul" class="charts-css legend legend-inline legend-square">
+
     </ul>
 
   </div>
@@ -37,4 +52,4 @@
 
 </div>
 
-<script src="./src/render/js/page_content_main.js" ></script>
+<script src="./src/render/js/page_content_main.js"></script>
