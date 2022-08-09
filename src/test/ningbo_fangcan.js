@@ -16,7 +16,7 @@ const childProcess = require('child_process')
 
 
 var connection = mysql.createConnection({
-    host: 'localhost',
+    host: '49.232.22.162',
     user: 'root',
     password: '123456789',
     database: 'mkk'
